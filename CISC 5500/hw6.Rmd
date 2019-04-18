@@ -1,0 +1,40 @@
+---
+title: "CISC HW6"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Question1
+
+> Download [the baby name data for 2016](https://storm.cis.fordham.edu/ji/cisc5500/yob2016.txt) . Write a R script that reads this file and plots a bar chart of the 10 most popular names regardless of gender, namely the x-axis shows the 10 names and the y-axis shows the number of babies who have a given name.
+
+#### Preprocessing
+In the first part, the script read the text file as the input with the edited column names. After the re-order with both two genders, it select the top 10 rows as the output.
+```{r preprocessing}
+df <- read.csv('/Users/lordxuzhiyu/Desktop/yob2016.txt', col.names = c('Name', 'Sex', 'Count'))
+res <- df[with(df, order(-Count)),]
+result <- head(res, 10)
+result
+```
+#### Plot with ggplot2
+After that, we use the ggplot2 package to draw the bar chart. The result is below:
+```{r plot}
+library(ggplot2)
+
+ggplot(result, aes(x = Name, y = Count)) + geom_bar(stat = "identity")
+```
+
+## Question 2
+> Write a R function that takes a vector (assuming the elements are integers) and returns a vector of only the elements that are multiple of 4 but not multiple of 100.
+
+#### Design
+We initalize a vector with a range of integers. Then we just output the result with the condition we want.
+```{r vector}
+input <- 1:1000
+input[((input %% 4) == 0)&((input %% 100) != 0)]
+```
